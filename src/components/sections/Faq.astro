@@ -1,0 +1,93 @@
+---
+import Eyebrow from "../ui/Eyebrow.astro";
+
+const faqs = [
+  {
+    question: "Kolik mě bude stát web, když se mi návrh bude líbit?",
+    answer:
+      "Návrh webu je zdarma a bez závazků. Pokud se rozhodnete pro realizaci, cena se pohybuje od 14 000 Kč do 20 000 Kč podle rozsahu projektu. Konečnou částku znáte předem, žádné skryté poplatky.",
+  },
+  {
+    question: "Dostanu návrh vždycky?",
+    answer:
+      "Ne vždy. Každý návrh připravuji osobně a zabere mi několik dní práce, takže jich můžu každý měsíc udělat jen omezený počet. Přihlášky proto vybírám podle toho, kde věřím, že nový web může podnikání skutečně pomoct.",
+  },
+  {
+    question: "Co když se mi návrh nebude líbit?",
+    answer:
+      "Nic neplatíte a nemáte žádnou povinnost pokračovat. Buď návrh upravím podle vašich připomínek, nebo se v klidu rozejdeme — riziko nesu já, ne vy.",
+  },
+  {
+    question: "Jak dlouho trvá, než web poběží?",
+    answer:
+      "Návrh vám obvykle připravím do 5 pracovních dnů od našeho hovoru. Pokud se na realizaci domluvíme, hotový web bývá spuštěný během 2–3 týdnů.",
+  },
+  {
+    question: "Kolik času to zabere mně?",
+    answer:
+      "Přibližně 30 minut na úvodní hovor a pak už jen krátké schválení návrhu. Texty, struktura, nasazení i technické věci jsou na mně.",
+  },
+  {
+    question: "Co když nemám texty ani fotky?",
+    answer:
+      "Texty napíšu za vás na základě úvodního hovoru. U fotek doporučím, co je potřeba, a poradím, jak je pořídit — případně použijeme kvalitní fotobanku.",
+  },
+];
+
+const naklady = [
+  "První rok po spuštění webu máte vše zdarma. Od druhého roku je správa webu 4 500 Kč ročně.",
+  "V ceně je hosting, technická správa, aktualizace a můj čas na drobné úpravy webu – například změnu textu, ceny, fotografie nebo kontaktních údajů.",
+  "Nemusíte se starat o technické věci ani řešit, co dělat, když budete chtít na webu něco změnit. Stačí mi napsat a postarám se o to.",
+];
+---
+
+<section class="w-full bg-surface-page">
+  <div class="mx-auto max-w-[820px] px-[clamp(20px,5vw,40px)] pb-[clamp(56px,9vw,88px)]">
+    <div class="mx-auto flex max-w-[820px] flex-col items-center gap-4 text-center">
+      <Eyebrow>Časté otázky</Eyebrow>
+      <h2 class="font-brand-heading text-[clamp(34px,6.4vw,58px)] font-extrabold uppercase leading-[1.1] tracking-[-1px] text-heading">
+        Na co se mě<br /><span class="text-blue-grey">klienti nejčastěji ptají</span>
+      </h2>
+    </div>
+
+    <div class="mx-auto mt-10 flex max-w-[620px] flex-col gap-3">
+      {
+        faqs.map((item, i) => (
+          <details
+            name="faq-group"
+            open={i === 0}
+            class="group rounded-brand-md bg-white shadow-brand-sm"
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-brand-sans text-sm font-bold text-heading marker:content-none sm:px-6 sm:py-[22px] sm:text-base">
+              {item.question}
+              <span class="shrink-0 text-[20px] transition-transform duration-200 group-open:rotate-90" aria-hidden="true">
+                ›
+              </span>
+            </summary>
+            <div class="px-5 pb-4 font-brand-sans text-sm leading-normal text-ink sm:px-6 sm:pb-[22px]">
+              {item.answer}
+            </div>
+          </details>
+        ))
+      }
+
+      <details name="faq-group" class="group rounded-brand-md bg-white shadow-brand-sm">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-brand-sans text-sm font-bold text-heading marker:content-none sm:px-6 sm:py-[22px] sm:text-base">
+          Jaké jsou náklady po spuštění webu?
+          <span class="shrink-0 text-[20px] transition-transform duration-200 group-open:rotate-90" aria-hidden="true">
+            ›
+          </span>
+        </summary>
+        <div class="flex flex-col gap-3 px-5 pb-4 font-brand-sans text-sm leading-normal text-ink sm:px-6 sm:pb-[22px]">
+          {naklady.map((p) => <p class="m-0">{p}</p>)}
+        </div>
+      </details>
+    </div>
+
+    <div class="mx-auto mt-[clamp(26px,5vw,36px)] flex max-w-[720px] flex-wrap items-center justify-center gap-5 text-center">
+      <p class="font-brand-sans text-[clamp(15px,3vw,18px)] font-semibold leading-normal text-body">
+        Nenašli jste odpověď? Napište mi na <a href="mailto:info@marekdaniel.com" class="text-blue-grey underline">info@marekdaniel.com</a>.
+      </p>
+    </div>
+  </div>
+</section>

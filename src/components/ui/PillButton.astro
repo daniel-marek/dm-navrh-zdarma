@@ -1,0 +1,29 @@
+---
+interface Props {
+  variant?: "primary" | "ghost";
+  size?: "sm" | "md";
+  class?: string;
+}
+
+const { variant = "primary", size = "md", class: className = "" } = Astro.props;
+
+const sizeClasses = size === "sm" ? "text-xs px-[22px] py-3" : "text-sm px-[34px] py-[18px]";
+
+const variantClasses =
+  variant === "ghost"
+    ? "bg-transparent border-2 border-ink text-heading shadow-none"
+    : "bg-action-primary text-space-indigo shadow-brand-md hover:bg-action-primary-hover active:bg-action-primary-active active:scale-[0.97]";
+---
+
+<!-- TODO: nahradit odkazem na externí formulář -->
+<a
+  href="#"
+  class:list={[
+    "inline-flex items-center justify-center gap-2.5 rounded-brand-pill font-brand-sans font-bold uppercase tracking-wide transition-[background,transform] duration-150 no-underline",
+    sizeClasses,
+    variantClasses,
+    className,
+  ]}
+>
+  <slot />
+</a>

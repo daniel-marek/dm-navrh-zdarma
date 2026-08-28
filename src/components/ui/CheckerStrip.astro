@@ -1,0 +1,16 @@
+---
+// Decorative 60-column, 2-row checkerboard divider, replaces the source design's 60 individual <span> tiles.
+---
+
+<div class="w-full bg-surface-page">
+  <div
+    class="w-full aspect-[60/1]"
+    style="background-image: repeating-linear-gradient(to right, var(--color-frozen-water) 0, var(--color-frozen-water) calc(100%/60), transparent calc(100%/60), transparent calc(100%/30));"
+  >
+  </div>
+  <div
+    class="w-full aspect-[60/1]"
+    style="background-image: repeating-linear-gradient(to right, transparent 0, transparent calc(100%/60), var(--color-frozen-water) calc(100%/60), var(--color-frozen-water) calc(100%/30));"
+  >
+  </div>
+</div>

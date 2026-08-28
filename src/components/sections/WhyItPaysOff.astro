@@ -1,0 +1,68 @@
+---
+import Eyebrow from "../ui/Eyebrow.astro";
+
+const items = [
+  {
+    title: "VÍCE POPTÁVEK",
+    subtitle: "Web, který přesvědčí zákazníka ozvat se.",
+    text: "Jasná nabídka, správně postavený obsah a výrazná výzva k akci pomáhají proměnit návštěvníky v nové poptávky.",
+    rotate: "rotate-1",
+  },
+  {
+    title: "Větší důvěra",
+    subtitle: "Profesionální první dojem rozhoduje.",
+    text: "Když web působí kvalitně a důvěryhodně, zákazník má větší důvod vybrat si vás místo konkurence.",
+    rotate: "-rotate-1",
+  },
+  {
+    title: "Více správných zákazníků",
+    subtitle: "Web osloví lidi, kterým máte skutečně co nabídnout.",
+    text: "Návštěvník během pár sekund pochopí, co děláte, pro koho to je a proč by měl zvolit právě vás.",
+    rotate: "rotate-1",
+  },
+  {
+    title: "Méně času stráveného vysvětlováním",
+    subtitle: "Všechno důležité najdou zákazníci sami.",
+    text: "Služby, ceny, reference, odpovědi na časté otázky i kontakt máte přehledně na jednom místě.",
+    rotate: "-rotate-1",
+  },
+  {
+    title: "Základ pro další růst",
+    subtitle: "Web není konečná. Je to základ pro další marketing.",
+    text: "Můžete na něj přivádět lidi z Google, sociálních sítí, reklamy nebo doporučení a postupně z něj dělat stabilní zdroj nových zákazníků.",
+    rotate: "rotate-1",
+  },
+];
+---
+
+<section class="w-full bg-surface-page">
+  <div class="mx-auto max-w-[640px] px-[clamp(20px,5vw,40px)] py-[clamp(56px,9vw,88px)]">
+    <div class="mx-auto flex max-w-[820px] flex-col items-center gap-4 text-center">
+      <Eyebrow>Proč se web vyplatí</Eyebrow>
+      <h2 class="font-brand-heading text-[clamp(34px,6.4vw,58px)] font-extrabold uppercase leading-[1.1] tracking-[-1px] text-heading">
+        Web vám musí přinášet<br /><span class="text-blue-grey">výsledky!</span>
+      </h2>
+      <p class="max-w-[560px] text-[clamp(16px,3.2vw,20px)] leading-normal text-body">
+        Nestačí, aby web dobře vypadal. Měl by lidem rychle vysvětlit, proč si vybrat
+        právě vás — a hlavně je přivést k akci. <b>Poptávce, rezervaci nebo telefonátu.</b>
+      </p>
+    </div>
+
+    <h3 class="mt-8 text-center font-brand-heading text-[clamp(22px,4.6vw,28px)] font-bold text-heading">
+      Postavím vám web, který přinese:
+    </h3>
+
+    <div class="mx-auto mt-6 flex max-w-[400px] flex-col gap-7">
+      {
+        items.map((item) => (
+          <div class:list={["gradient-card flex flex-col gap-3.5 rounded-brand-lg p-[clamp(22px,4vw,28px)]", item.rotate]}>
+            <img src="/check-mark.webp" alt="" width="32" height="32" class="h-8 w-8" />
+            <span class="font-brand-heading text-xl font-extrabold uppercase text-heading">{item.title}</span>
+            <span class="font-brand-sans text-sm font-bold italic text-blue-grey">{item.subtitle}</span>
+            <span class="font-brand-sans text-sm font-semibold leading-normal text-ink">{item.text}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

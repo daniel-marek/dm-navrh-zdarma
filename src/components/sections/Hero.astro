@@ -1,0 +1,40 @@
+---
+import PillButton from "../ui/PillButton.astro";
+import Eyebrow from "../ui/Eyebrow.astro";
+---
+
+<section class="w-full">
+  <div class="mx-auto flex max-w-[1000px] flex-col items-center gap-6 px-[clamp(20px,5vw,40px)] pt-[clamp(36px,6vw,56px)] pb-[clamp(60px,9vw,96px)] text-center">
+    <Eyebrow>Návrh webu zdarma</Eyebrow>
+
+    <h1
+      class="font-brand-heading text-[clamp(42px,8.6vw,80px)] leading-[1.05] font-extrabold uppercase tracking-[-0.03em] text-balance text-heading"
+    >
+      Nový web pro vaši firmu?<br />
+      <span class="text-blue-grey">Navrhnu vám ho zdarma</span>
+    </h1>
+
+    <p class="max-w-[520px] text-[clamp(16px,3.2vw,20px)] leading-normal text-body">
+      Vytvořím vám návrh webu <strong>zdarma a bez závazků</strong>. Uvidíte přesně, jak
+      bude vypadat, než se pro cokoliv rozhodnete — a zaplatíte teprve tehdy, až budete
+      s výsledkem spokojení.
+    </p>
+
+    <div class="flex flex-col items-center gap-2.5">
+      <span class="inline-flex -rotate-1 items-center gap-1.5 rounded-brand-sm bg-surface-chip px-3.5 py-2 font-brand-sans text-xs font-bold text-heading">
+        <img src="/check-mark.webp" alt="" width="18" height="18" class="h-[18px] w-[18px]" />
+        <span>Platíte, jen když jste spokojení</span>
+      </span>
+      <span class="inline-flex rotate-1 items-center gap-1.5 rounded-brand-sm bg-surface-chip px-3.5 py-2 font-brand-sans text-xs font-bold text-heading">
+        <img src="/check-mark.webp" alt="" width="18" height="18" class="h-[18px] w-[18px]" />
+        <span>100 % bez závazků</span>
+      </span>
+      <span class="inline-flex -rotate-1 items-center gap-1.5 rounded-brand-sm bg-surface-chip px-3.5 py-2 font-brand-sans text-xs font-bold text-heading">
+        <img src="/check-mark.webp" alt="" width="18" height="18" class="h-[18px] w-[18px]" />
+        <span>Vše vyřeším za vás</span>
+      </span>
+    </div>
+
+    <PillButton variant="primary" size="md" class="mt-2">Chci návrh webu</PillButton>
+  </div>
+</section>

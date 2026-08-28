@@ -1,0 +1,33 @@
+---
+interface Props {
+  flip?: boolean;
+  class?: string;
+}
+
+const { flip = false, class: className = "" } = Astro.props;
+---
+
+<div class:list={["flex justify-center py-2", className]}>
+  <svg
+    width="80"
+    height="150"
+    viewBox="0 0 80 150"
+    fill="none"
+    class="text-blue-grey"
+    style={flip ? "transform: scaleX(-1)" : undefined}
+  >
+    <path
+      d="M40 4 C40 40, 70 44, 55 62 C40 80, 10 76, 12 110"
+      stroke="currentColor"
+      stroke-width="3"
+      stroke-linecap="round"
+      pathLength="170"
+      stroke-dasharray="10 10"></path>
+    <path
+      d="M1 118 C 6 126, 10 133, 12 142 C 15 132, 19 126, 24 121 C 17 125, 8 124, 1 118 Z"
+      fill="currentColor"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linejoin="round"></path>
+  </svg>
+</div>

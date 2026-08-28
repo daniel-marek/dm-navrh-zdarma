@@ -1,0 +1,137 @@
+---
+import "../styles/globals.css";
+
+import Footer from "../components/sections/Footer.astro";
+---
+
+<html lang="cs">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Zásady ochrany osobních údajů — Daniel Marek</title>
+		<meta name="robots" content="noindex" />
+	</head>
+	<body class="bg-surface-page font-brand-sans">
+		<header class="w-full">
+			<div class="mx-auto flex max-w-[1180px] items-center px-[clamp(20px,5vw,40px)] pt-[clamp(20px,5vw,32px)]">
+				<a href="/" class="block">
+					<img
+						src="/logo-prodejka.svg"
+						alt="Daniel Marek"
+						class="block h-[clamp(32px,6.5vw,44px)] w-auto"
+					/>
+				</a>
+			</div>
+		</header>
+
+		<main class="mx-auto max-w-[760px] px-[clamp(20px,5vw,40px)] pb-[clamp(72px,12vw,120px)] pt-[clamp(36px,6vw,56px)]">
+			<h1 class="text-balance font-brand-heading text-[clamp(30px,6.4vw,56px)] font-extrabold uppercase leading-[1.08] tracking-[-0.025em] text-heading">
+				Zásady ochrany osobních údajů
+			</h1>
+			<p class="mt-5 text-xs text-body">Poslední aktualizace: 27. 8. 2026</p>
+
+			<div class="mt-12 flex flex-col gap-10 text-sm leading-normal text-body">
+				<section class="flex flex-col gap-3">
+					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">1. Kdo zpracovává vaše údaje</h2>
+					<p class="m-0">
+						Správcem osobních údajů je <strong>Daniel Marek</strong>, IČO: 00000000, se sídlem [adresa], e-mail:
+						<a href="mailto:info@marekdaniel.com" class="text-blue-grey underline">info@marekdaniel.com</a>.
+						Na tento e-mail se můžete obrátit s jakýmkoliv dotazem ohledně zpracování vašich údajů.
+					</p>
+				</section>
+
+				<section class="flex flex-col gap-3">
+					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">2. Jaké údaje zpracovávám</h2>
+					<p class="m-0">Zpracovávám pouze údaje, které mi sami předáte prostřednictvím formuláře na tomto webu nebo e-mailem:</p>
+					<ul class="m-0 mt-1 flex flex-col gap-2 pl-[22px]">
+						<li>jméno a příjmení,</li>
+						<li>e-mailová adresa,</li>
+						<li>telefonní číslo (pokud jej uvedete),</li>
+						<li>název firmy a informace o vašem podnikání, které mi sdělíte,</li>
+						<li>technické údaje o návštěvě webu (IP adresa, typ prohlížeče, zdroj návštěvy).</li>
+					</ul>
+				</section>
+
+				<section class="flex flex-col gap-3">
+					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">3. Proč údaje zpracovávám</h2>
+					<ul class="m-0 flex flex-col gap-2 pl-[22px]">
+						<li><strong>Vyřízení vaší poptávky</strong> — abych vás mohl kontaktovat, připravit návrh webu a dohodnout se na spolupráci. Právním základem je plnění smlouvy, resp. jednání o jejím uzavření.</li>
+						<li><strong>Zasílání obchodních sdělení</strong> — tipy a informace o mých službách. Odesílám je jen na základě vašeho souhlasu a odhlásit se můžete kdykoliv jedním kliknutím.</li>
+						<li><strong>Zákonné povinnosti</strong> — vedení účetnictví a evidence dokladů.</li>
+						<li><strong>Zlepšování webu</strong> — anonymizovaná statistika návštěvnosti na základě oprávněného zájmu.</li>
+					</ul>
+				</section>
+
+				<section class="flex flex-col gap-3">
+					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">4. Jak dlouho údaje uchovávám</h2>
+					<p class="m-0">
+						Údaje z poptávky uchovávám po dobu jednání o spolupráci a následně 3 roky od posledního kontaktu.
+						Údaje pro zasílání obchodních sdělení uchovávám do odvolání souhlasu. Účetní doklady archivuji po
+						dobu stanovenou zákonem, obvykle 10 let.
+					</p>
+				</section>
+
+				<section class="flex flex-col gap-3">
+					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">5. Komu údaje předávám</h2>
+					<p class="m-0">
+						Vaše údaje neprodávám a nepředávám nikomu, kdo by je používal pro vlastní účely. Využívám ale
+						služby zpracovatelů, kteří mi pomáhají s provozem podnikání — poskytovatele hostingu a e-mailu,
+						nástroj pro e-mailovou komunikaci, analytické nástroje a účetní. Všichni jsou vázáni mlčenlivostí
+						a zpracovávají údaje pouze podle mých pokynů.
+					</p>
+				</section>
+
+				<section class="flex flex-col gap-3">
+					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">6. Cookies</h2>
+					<p class="m-0">
+						Web používá technické cookies nutné pro jeho fungování a analytické cookies pro měření
+						návštěvnosti. Analytické a marketingové cookies se ukládají jen s vaším souhlasem, který můžete
+						kdykoliv změnit v nastavení cookies nebo přímo ve svém prohlížeči.
+					</p>
+				</section>
+
+				<section class="flex flex-col gap-3">
+					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">7. Vaše práva</h2>
+					<p class="m-0">V souvislosti se zpracováním osobních údajů máte právo:</p>
+					<ul class="m-0 mt-1 flex flex-col gap-2 pl-[22px]">
+						<li>na přístup ke svým údajům a na jejich kopii,</li>
+						<li>na opravu nepřesných nebo doplnění neúplných údajů,</li>
+						<li>na výmaz údajů, pokud pro jejich zpracování už není důvod,</li>
+						<li>na omezení zpracování a na přenositelnost údajů,</li>
+						<li>vznést námitku proti zpracování na základě oprávněného zájmu,</li>
+						<li>kdykoliv odvolat souhlas se zasíláním obchodních sdělení,</li>
+						<li>
+							podat stížnost u Úřadu pro ochranu osobních údajů
+							(<a href="https://uoou.gov.cz" target="_blank" rel="noopener" class="text-blue-grey underline">uoou.gov.cz</a>).
+						</li>
+					</ul>
+					<p class="m-0 mt-1">
+						Stačí napsat na <a href="mailto:info@marekdaniel.com" class="text-blue-grey underline">info@marekdaniel.com</a>
+						a vyřídím to nejpozději do jednoho měsíce.
+					</p>
+				</section>
+
+				<section class="flex flex-col gap-3">
+					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">8. Zabezpečení údajů</h2>
+					<p class="m-0">
+						Údaje chráním technickými i organizačními opatřeními — šifrovaným přenosem dat, přístupem pouze
+						pro oprávněné osoby a pravidelnou kontrolou používaných nástrojů.
+					</p>
+				</section>
+
+				<section class="flex flex-col gap-3">
+					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">9. Změny těchto zásad</h2>
+					<p class="m-0">
+						Tyto zásady mohu v čase upravit, například když začnu používat nový nástroj. Aktuální verze je
+						vždy dostupná na této stránce s uvedeným datem poslední aktualizace.
+					</p>
+				</section>
+			</div>
+		</main>
+
+		<Footer />
+	</body>
+</html>

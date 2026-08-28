@@ -1,0 +1,85 @@
+---
+import Eyebrow from "../ui/Eyebrow.astro";
+
+const cases = [
+  {
+    name: "Honza Cestuje",
+    tag: "Cestovatel a influencer",
+    title: "Za 24 hodin od spuštění webu Honza prodal 98 průvodců v hodnotě 82 000 Kč",
+    text: "Honza za mnou přišel s <b>hotovými průvodci</b>, které chtěl začít <b>prodávat</b> svým sledujícím. <b>Během týdne</b> jsme vytvořili web, kde si každý může průvodce prohlédnout a <b>rovnou koupit</b>, nebo se <b>přihlásit k odběru e-mailů</b>.",
+    image: "/photos/web-honza-cestuje.png",
+    alt: "Web Honza cestuje",
+  },
+  {
+    name: "Holá Legal",
+    tag: "Advokátní kancelář",
+    title: "380+ organických návštěvníků měsíčně bez jediné koruny za reklamu",
+    text: "Paní Holá potřebovala <b>web</b>, kde bude <b>prezentovat své právní služby</b> a pravidelně publikovat <b>články</b>. Vytvořili jsme moderní web s blogem a <b>kompletní anglickou verzí pro zahraniční klientelu</b>, který dnes generuje stovky organických návštěv měsíčně <b>bez placené reklamy</b>.",
+    image: "/photos/web-hola-legal.png",
+    alt: "Web Holá Legal",
+  },
+  {
+    name: "Hero Gym",
+    tag: "Posilovna",
+    title: "Moderní web, který na první pohled ukazuje kvalitu posilovny",
+    text: "Majitel <b>Hero Gymu</b> potřeboval <b>jeden web pro tři pobočky</b>, který bude působit stejně <b>kvalitně</b> jako <b>samotné posilovny</b>. Vytvořili jsme moderní redesign, kde má každá pobočka <b>vlastní identitu</b> a zároveň vše zapadá do jednotného <b>prémiového designu</b>.",
+    image: "/photos/web-hero-gym.png",
+    alt: "Web Hero Gym",
+  },
+  {
+    name: "SaÚZ",
+    tag: "Experti na kácení stromů",
+    title: "Každý měsíc průměrně 38 nových poptávek díky propojení webu a Google reklamy",
+    text: "Firma SaÚZ <b>potřebovala získávat více poptávek</b> na konkrétní služby. Vytvořili jsme <b>prodejní stránky</b> pro jednotlivé služby a <b>napojili</b> je na <b>Google reklamu</b>, která dnes přivádí průměrně <b>38 poptávek měsíčně</b>.",
+    image: "/photos/web-sauz.png",
+    alt: "Web SaÚZ",
+  },
+  {
+    name: "NT Beauty",
+    tag: "Kosmetický salon",
+    title: "Web s rezervačním systémem šetří klientce hodiny času každý týden",
+    text: "Majitelka NT Beauty chtěla <b>jednoduchý web</b>, kde návštěvníci rychle najdou <b>nabízené služby a jejich ceny</b>. Vytvořili jsme <b>moderní prezentaci</b> s ceníkem a <b>rezervačním systémem</b>, díky kterému už nemusí objednávky řešit po telefonu.",
+    image: "/photos/web-nt-beauty.png",
+    alt: "Web NT Beauty",
+  },
+];
+---
+
+<section class="w-full bg-surface-page">
+  <div class="mx-auto max-w-[1080px] px-[clamp(20px,5vw,40px)] py-[clamp(56px,9vw,88px)]">
+    <div class="mx-auto flex max-w-[820px] flex-col items-center gap-4 text-center">
+      <Eyebrow>Dokončené weby</Eyebrow>
+      <h2 class="font-brand-heading text-[clamp(34px,6.4vw,58px)] font-extrabold uppercase leading-[1.1] tracking-[-1px] text-heading">
+        Weby, které už mým klientům <span class="text-blue-grey">přivádějí nové zákazníky</span>
+      </h2>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-9">
+      {
+        cases.map((item) => (
+          <div class="gradient-card-cool flex h-[500px] max-[780px]:h-auto flex-wrap items-stretch overflow-hidden rounded-brand-lg">
+            <div class="flex min-w-0 flex-1 basis-[340px] flex-col justify-between gap-6 bg-white py-[clamp(28px,4vw,40px)]">
+              <div class="flex flex-col gap-2 px-[clamp(22px,4vw,40px)]">
+                <span class="font-brand-sans text-sm font-semibold text-blue-grey">{item.name}</span>
+                <span class="w-fit rounded-full bg-surface-chip px-2.5 py-1 font-brand-sans text-[13px] font-semibold text-body">
+                  {item.tag}
+                </span>
+                <h3 class="mt-3.5 font-brand-heading text-[clamp(30px,3.8vw,38px)] font-semibold leading-[1.1] text-heading">
+                  {item.title}
+                </h3>
+              </div>
+              <div class="flex flex-col gap-3 border-t border-space-indigo px-[clamp(22px,4vw,40px)] pt-6">
+                <p class="font-brand-sans text-sm leading-normal text-body" set:html={item.text} />
+              </div>
+            </div>
+            <img
+              src={item.image}
+              alt={item.alt}
+              class="min-h-[240px] min-w-0 flex-1 basis-[340px] self-stretch object-cover object-left-top"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

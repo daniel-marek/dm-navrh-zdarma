@@ -1,0 +1,19 @@
+---
+import PillButton from "../ui/PillButton.astro";
+---
+
+<header class="w-full">
+  <div
+    id="site-header"
+    class="mx-auto flex max-w-[1180px] items-center justify-between px-[clamp(20px,5vw,40px)] pt-[clamp(20px,5vw,32px)] max-[640px]:justify-center"
+  >
+    <img
+      src="/logo-prodejka.svg"
+      alt="Daniel Marek"
+      class="block h-[clamp(32px,6.5vw,44px)] w-auto"
+    />
+    <div class="max-[640px]:hidden">
+      <PillButton variant="primary" size="sm">Chci návrh webu</PillButton>
+    </div>
+  </div>
+</header>
