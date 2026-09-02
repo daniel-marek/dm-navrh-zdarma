@@ -1,0 +1,267 @@
+---
+---
+
+<div
+  id="contact-form-overlay"
+  class="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-surface-page"
+  data-state="closed"
+  hidden
+>
+  <div class="border-b-2 border-surface-alt">
+    <div class="mx-auto flex max-w-[1180px] items-center justify-end px-[clamp(20px,5vw,40px)] py-4">
+      <button
+        type="button"
+        id="contact-form-close"
+        aria-label="Zavřít formulář"
+        class="inline-flex cursor-pointer items-center gap-2 rounded-brand-pill px-3 py-2 text-xs font-bold uppercase tracking-wide text-heading transition-colors hover:bg-surface-alt"
+      >
+        Zavřít
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M4 4L16 16M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="flex flex-1 items-start justify-center">
+  <div
+    id="contact-form-panel"
+    class="relative w-full max-w-[560px] translate-y-10 rounded-brand-lg p-[clamp(24px,4vw,40px)] opacity-0 transition-[opacity,translate] duration-300 ease-out"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="contact-form-title"
+  >
+    <div class="text-center">
+      <h2 id="contact-form-title" class="text-balance font-brand-heading text-[clamp(34px,6.4vw,58px)] font-extrabold uppercase leading-[1.1] tracking-[-1px] text-heading">
+        Získejte zdarma návrh webu do 3 dnů
+      </h2>
+      <p class="mt-5 text-sm text-body">
+        Zanechte mi na sebe kontakt. Ozvu se vám, proberem vaši představu a do 3 dnů vám
+        připravím návrh webu zdarma.
+      </p>
+    </div>
+
+    <form id="contact-form" class="mt-6 flex flex-col gap-7">
+      <div class="flex flex-col gap-5 rounded-brand-lg bg-[#E5F9F2] p-6">
+        <div class="flex flex-col gap-1">
+          <label for="contact-form-name" class="text-xs font-bold text-body">Jméno</label>
+          <input
+            type="text"
+            id="contact-form-name"
+            name="name"
+            required
+            placeholder="Petr Dvořák"
+            class="rounded-brand-sm bg-surface-page px-3 py-2 text-xs leading-[27px] text-body border-2 border-transparent outline-none transition-colors placeholder:font-medium focus:border-blue-grey"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="contact-form-email" class="text-xs font-bold text-body">Email</label>
+          <input
+            type="email"
+            id="contact-form-email"
+            name="email"
+            required
+            placeholder="petr.dvorak@email.cz"
+            class="rounded-brand-sm bg-surface-page px-3 py-2 text-xs leading-[27px] text-body border-2 border-transparent outline-none transition-colors placeholder:font-medium focus:border-blue-grey"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="contact-form-phone" class="text-xs font-bold text-body">Telefon</label>
+          <input
+            type="tel"
+            id="contact-form-phone"
+            name="phone"
+            required
+            pattern="[0-9+\-\s\(\)]{9,20}"
+            title="Zadejte platné telefonní číslo (alespoň 9 číslic)"
+            placeholder="+420 777 123 456"
+            class="rounded-brand-sm bg-surface-page px-3 py-2 text-xs leading-[27px] text-body border-2 border-transparent outline-none transition-colors placeholder:font-medium focus:border-blue-grey"
+          />
+        </div>
+
+        <div class="flex flex-col gap-1">
+          <label for="contact-form-note" class="text-xs font-bold text-body">Poznámka</label>
+          <textarea
+            id="contact-form-note"
+            name="note"
+            rows="3"
+            placeholder="Popište svůj projekt nebo co od nového webu očekáváte."
+            class="resize-none rounded-brand-sm bg-surface-page px-3 py-2 text-xs leading-[27px] text-body border-2 border-transparent outline-none transition-colors placeholder:font-medium focus:border-blue-grey"
+          ></textarea>
+        </div>
+      </div>
+
+      <p class="text-center text-xs text-body/70">
+        Odesláním souhlasíte se <a href="/zasady-ochrany-osobnich-udaju" target="_blank" rel="noopener" class="text-blue-grey no-underline hover:underline">zpracováním osobních údajů</a>.
+      </p>
+
+      <div id="contact-form-error" role="alert" class="rounded-brand-sm bg-destructive/10 px-4 py-3 text-sm text-destructive" hidden></div>
+
+      <button
+        type="submit"
+        id="contact-form-submit"
+        class="mt-2 inline-flex cursor-pointer items-center justify-center rounded-brand-pill bg-action-primary px-[34px] py-[18px] text-sm font-bold uppercase tracking-wide text-space-indigo transition-[background,transform] duration-150 hover:bg-action-primary-hover active:scale-[0.97] active:bg-action-primary-active disabled:cursor-not-allowed disabled:opacity-60 disabled:active:scale-100"
+      >
+        Odeslat
+      </button>
+    </form>
+
+    <div id="contact-form-success" class="mt-6 flex flex-col items-center gap-3 rounded-brand-lg bg-[#E5F9F2] p-[clamp(24px,5vw,40px)] text-center" hidden>
+      <img src="/check-mark.webp" alt="" width="48" height="48" class="h-[48px] w-[48px]" />
+      <h2 class="font-brand-heading text-xl font-bold uppercase tracking-wide text-heading">Děkuji za vyplnění!</h2>
+      <p class="text-base text-body">Ozvu se vám co nejdříve.</p>
+    </div>
+  </div>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById("contact-form-overlay") as HTMLDivElement | null;
+  const panel = document.getElementById("contact-form-panel") as HTMLDivElement | null;
+  const closeBtn = document.getElementById("contact-form-close") as HTMLButtonElement | null;
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const submitBtn = document.getElementById("contact-form-submit") as HTMLButtonElement | null;
+  const errorBox = document.getElementById("contact-form-error") as HTMLDivElement | null;
+  const successBox = document.getElementById("contact-form-success") as HTMLDivElement | null;
+
+  if (overlay && panel && closeBtn && form && submitBtn && errorBox && successBox) {
+    let lastFocused: HTMLElement | null = null;
+    let savedScrollY = 0;
+    const submitLabel = submitBtn.textContent ?? "Odeslat";
+
+    function showError(message: string) {
+      if (!errorBox) return;
+      errorBox.textContent = message;
+      errorBox.hidden = false;
+    }
+
+    function hideError() {
+      if (!errorBox) return;
+      errorBox.hidden = true;
+      errorBox.textContent = "";
+    }
+
+    function onKeydown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+      if (e.key !== "Tab" || !overlay) return;
+      const focusable = overlay.querySelectorAll<HTMLElement>(
+        'button, input, textarea, [href], [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    function open() {
+      if (!overlay) return;
+      lastFocused = document.activeElement as HTMLElement | null;
+      savedScrollY = window.scrollY;
+
+      overlay.hidden = false;
+      overlay.dataset.state = "open";
+      // Wait a full rendered frame before removing the initial state, otherwise the
+      // browser can collapse both states into one paint and skip the transition.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          panel?.classList.remove("translate-y-10", "opacity-0");
+        });
+      });
+
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${savedScrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+
+      document.getElementById("contact-form-name")?.focus();
+      document.addEventListener("keydown", onKeydown);
+    }
+
+    function close() {
+      if (!overlay) return;
+      overlay.dataset.state = "closed";
+      panel?.classList.add("translate-y-10", "opacity-0");
+
+      window.setTimeout(() => {
+        if (overlay.dataset.state !== "closed") return;
+        overlay.hidden = true;
+        if (successBox && !successBox.hidden) {
+          successBox.hidden = true;
+          form!.hidden = false;
+          form!.reset();
+          submitBtn!.disabled = false;
+          submitBtn!.textContent = submitLabel;
+          hideError();
+        }
+      }, 300);
+
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      window.scrollTo(0, savedScrollY);
+
+      document.removeEventListener("keydown", onKeydown);
+      lastFocused?.focus();
+    }
+
+    document.querySelectorAll<HTMLElement>("[data-open-contact-form]").forEach((trigger) => {
+      trigger.addEventListener("click", open);
+    });
+
+    closeBtn.addEventListener("click", close);
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) close();
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      hideError();
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Odesílání…";
+
+      const formData = new FormData(form);
+      const payload = {
+        name: String(formData.get("name") ?? "").trim(),
+        email: String(formData.get("email") ?? "").trim(),
+        phone: String(formData.get("phone") ?? "").trim(),
+        note: String(formData.get("note") ?? "").trim(),
+      };
+
+      try {
+        const res = await fetch("/api/submit-form", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.ok) {
+          form.hidden = true;
+          successBox.hidden = false;
+          const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
+          if (typeof fbq === "function") fbq("track", "Lead");
+        } else {
+          const data = await res.json().catch(() => null);
+          showError(data?.error || "Odeslání se nezdařilo. Zkuste to prosím znovu.");
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitLabel;
+        }
+      } catch {
+        showError("Odeslání se nezdařilo, zkontrolujte připojení a zkuste to znovu.");
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitLabel;
+      }
+    });
+  }
+</script>

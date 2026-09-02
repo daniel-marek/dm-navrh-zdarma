@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import "../styles/globals.css";
 
 import Header from "../components/sections/Header.astro";
@@ -18,6 +20,7 @@ import Footer from "../components/sections/Footer.astro";
 
 import CheckerStrip from "../components/ui/CheckerStrip.astro";
 import DecoArrow from "../components/ui/DecoArrow.astro";
+import ContactFormModal from "../components/ui/ContactFormModal.astro";
 ---
 
 <html lang="cs">
@@ -53,5 +56,6 @@ import DecoArrow from "../components/ui/DecoArrow.astro";
 		<FinalCta />
 		<Faq />
 		<Footer />
+		<ContactFormModal />
 	</body>
 </html>

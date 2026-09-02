@@ -4,7 +4,10 @@ import Eyebrow from "../ui/Eyebrow.astro";
 ---
 
 <section class="w-full">
-  <div class="mx-auto flex max-w-[1000px] flex-col items-center gap-6 px-[clamp(20px,5vw,40px)] pt-[clamp(36px,6vw,56px)] pb-[clamp(60px,9vw,96px)] text-center">
+  <div
+    id="hero-content"
+    class="mx-auto flex max-w-[1000px] translate-y-10 flex-col items-center gap-6 px-[clamp(20px,5vw,40px)] pt-[clamp(36px,6vw,56px)] pb-[clamp(60px,9vw,96px)] text-center opacity-0 transition-[opacity,translate] duration-300 ease-out"
+  >
     <Eyebrow>Návrh webu zdarma</Eyebrow>
 
     <h1
@@ -38,3 +41,14 @@ import Eyebrow from "../ui/Eyebrow.astro";
     <PillButton variant="primary" size="md" class="mt-2">Chci návrh webu</PillButton>
   </div>
 </section>
+
+<script>
+  const heroContent = document.getElementById("hero-content");
+  if (heroContent) {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        heroContent.classList.remove("translate-y-10", "opacity-0");
+      });
+    });
+  }
+</script>
