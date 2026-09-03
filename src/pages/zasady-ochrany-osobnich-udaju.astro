@@ -3,7 +3,9 @@ export const prerender = true;
 
 import "../styles/globals.css";
 
+import Header from "../components/sections/Header.astro";
 import Footer from "../components/sections/Footer.astro";
+import ContactFormModal from "../components/ui/ContactFormModal.astro";
 ---
 
 <html lang="cs">
@@ -17,17 +19,7 @@ import Footer from "../components/sections/Footer.astro";
 		<meta name="robots" content="noindex" />
 	</head>
 	<body class="bg-surface-page font-brand-sans">
-		<header class="w-full">
-			<div class="mx-auto flex max-w-[1180px] items-center px-[clamp(20px,5vw,40px)] pt-[clamp(20px,5vw,32px)]">
-				<a href="/" class="block">
-					<img
-						src="/logo-prodejka.svg"
-						alt="Daniel Marek"
-						class="block h-[clamp(32px,6.5vw,44px)] w-auto"
-					/>
-				</a>
-			</div>
-		</header>
+		<Header />
 
 		<main class="mx-auto max-w-[760px] px-[clamp(20px,5vw,40px)] pb-[clamp(72px,12vw,120px)] pt-[clamp(36px,6vw,56px)]">
 			<h1 class="text-balance font-brand-heading text-[clamp(30px,6.4vw,56px)] font-extrabold uppercase leading-[1.08] tracking-[-0.025em] text-heading">
@@ -39,8 +31,7 @@ import Footer from "../components/sections/Footer.astro";
 				<section class="flex flex-col gap-3">
 					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">1. Kdo zpracovává vaše údaje</h2>
 					<p class="m-0">
-						Správcem osobních údajů je <strong>Daniel Marek</strong>, IČO: 00000000, se sídlem [adresa], e-mail:
-						<a href="mailto:info@marekdaniel.com" class="text-blue-grey underline">info@marekdaniel.com</a>.
+						Správcem osobních údajů je <strong>Daniel Marek</strong>, IČO: 09019405, se sídlem Vrchlického 175, 285 31 Nové Dvory, e-mail: <a href="mailto:info@marekdaniel.com" class="text-blue-grey underline">info@marekdaniel.com</a>.
 						Na tento e-mail se můžete obrátit s jakýmkoliv dotazem ohledně zpracování vašich údajů.
 					</p>
 				</section>
@@ -48,10 +39,10 @@ import Footer from "../components/sections/Footer.astro";
 				<section class="flex flex-col gap-3">
 					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">2. Jaké údaje zpracovávám</h2>
 					<p class="m-0">Zpracovávám pouze údaje, které mi sami předáte prostřednictvím formuláře na tomto webu nebo e-mailem:</p>
-					<ul class="m-0 mt-1 flex flex-col gap-2 pl-[22px]">
+					<ul class="m-0 mt-1 flex flex-col gap-2 pl-[40px] list-disc">
 						<li>jméno a příjmení,</li>
 						<li>e-mailová adresa,</li>
-						<li>telefonní číslo (pokud jej uvedete),</li>
+						<li>telefonní číslo,</li>
 						<li>název firmy a informace o vašem podnikání, které mi sdělíte,</li>
 						<li>technické údaje o návštěvě webu (IP adresa, typ prohlížeče, zdroj návštěvy).</li>
 					</ul>
@@ -59,7 +50,7 @@ import Footer from "../components/sections/Footer.astro";
 
 				<section class="flex flex-col gap-3">
 					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">3. Proč údaje zpracovávám</h2>
-					<ul class="m-0 flex flex-col gap-2 pl-[22px]">
+					<ul class="m-0 flex flex-col gap-2 pl-0 list-none">
 						<li><strong>Vyřízení vaší poptávky</strong> — abych vás mohl kontaktovat, připravit návrh webu a dohodnout se na spolupráci. Právním základem je plnění smlouvy, resp. jednání o jejím uzavření.</li>
 						<li><strong>Zasílání obchodních sdělení</strong> — tipy a informace o mých službách. Odesílám je jen na základě vašeho souhlasu a odhlásit se můžete kdykoliv jedním kliknutím.</li>
 						<li><strong>Zákonné povinnosti</strong> — vedení účetnictví a evidence dokladů.</li>
@@ -69,21 +60,27 @@ import Footer from "../components/sections/Footer.astro";
 
 				<section class="flex flex-col gap-3">
 					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">4. Jak dlouho údaje uchovávám</h2>
-					<p class="m-0">
-						Údaje z poptávky uchovávám po dobu jednání o spolupráci a následně 3 roky od posledního kontaktu.
-						Údaje pro zasílání obchodních sdělení uchovávám do odvolání souhlasu. Účetní doklady archivuji po
-						dobu stanovenou zákonem, obvykle 10 let.
-					</p>
+					<p class="m-0">Doba uchovávání se liší podle účelu zpracování:</p>
+					<ul class="m-0 mt-1 flex flex-col gap-2 pl-[40px] list-disc">
+						<li>údaje z poptávky uchovávám po dobu jednání o spolupráci a následně 3 roky od posledního kontaktu,</li>
+						<li>údaje pro zasílání obchodních sdělení uchovávám do odvolání souhlasu,</li>
+						<li>účetní doklady archivuji po dobu stanovenou zákonem, obvykle 10 let.</li>
+					</ul>
 				</section>
 
 				<section class="flex flex-col gap-3">
 					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">5. Komu údaje předávám</h2>
 					<p class="m-0">
 						Vaše údaje neprodávám a nepředávám nikomu, kdo by je používal pro vlastní účely. Využívám ale
-						služby zpracovatelů, kteří mi pomáhají s provozem podnikání — poskytovatele hostingu a e-mailu,
-						nástroj pro e-mailovou komunikaci, analytické nástroje a účetní. Všichni jsou vázáni mlčenlivostí
-						a zpracovávají údaje pouze podle mých pokynů.
+						služby zpracovatelů, kteří mi pomáhají s provozem podnikání:
 					</p>
+					<ul class="m-0 mt-1 flex flex-col gap-2 pl-[40px] list-disc">
+						<li>poskytovatele hostingu a e-mailu,</li>
+						<li>nástroj pro e-mailovou komunikaci,</li>
+						<li>analytické nástroje,</li>
+						<li>účetní.</li>
+					</ul>
+					<p class="m-0 mt-1">Všichni jsou vázáni mlčenlivostí a zpracovávají údaje pouze podle mých pokynů.</p>
 				</section>
 
 				<section class="flex flex-col gap-3">
@@ -98,7 +95,7 @@ import Footer from "../components/sections/Footer.astro";
 				<section class="flex flex-col gap-3">
 					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">7. Vaše práva</h2>
 					<p class="m-0">V souvislosti se zpracováním osobních údajů máte právo:</p>
-					<ul class="m-0 mt-1 flex flex-col gap-2 pl-[22px]">
+					<ul class="m-0 mt-1 flex flex-col gap-2 pl-[40px] list-disc">
 						<li>na přístup ke svým údajům a na jejich kopii,</li>
 						<li>na opravu nepřesných nebo doplnění neúplných údajů,</li>
 						<li>na výmaz údajů, pokud pro jejich zpracování už není důvod,</li>
@@ -111,17 +108,18 @@ import Footer from "../components/sections/Footer.astro";
 						</li>
 					</ul>
 					<p class="m-0 mt-1">
-						Stačí napsat na <a href="mailto:info@marekdaniel.com" class="text-blue-grey underline">info@marekdaniel.com</a>
-						a vyřídím to nejpozději do jednoho měsíce.
+						Stačí napsat na <a href="mailto:info@marekdaniel.com" class="text-blue-grey underline">info@marekdaniel.com</a> a vyřídím to nejpozději do jednoho měsíce.
 					</p>
 				</section>
 
 				<section class="flex flex-col gap-3">
 					<h2 class="font-brand-heading text-[clamp(20px,3.6vw,24px)] font-extrabold text-heading">8. Zabezpečení údajů</h2>
-					<p class="m-0">
-						Údaje chráním technickými i organizačními opatřeními — šifrovaným přenosem dat, přístupem pouze
-						pro oprávněné osoby a pravidelnou kontrolou používaných nástrojů.
-					</p>
+					<p class="m-0">Údaje chráním technickými i organizačními opatřeními:</p>
+					<ul class="m-0 mt-1 flex flex-col gap-2 pl-[40px] list-disc">
+						<li>šifrovaným přenosem dat,</li>
+						<li>přístupem pouze pro oprávněné osoby,</li>
+						<li>pravidelnou kontrolou používaných nástrojů.</li>
+					</ul>
 				</section>
 
 				<section class="flex flex-col gap-3">
@@ -135,5 +133,6 @@ import Footer from "../components/sections/Footer.astro";
 		</main>
 
 		<Footer />
+		<ContactFormModal />
 	</body>
 </html>
