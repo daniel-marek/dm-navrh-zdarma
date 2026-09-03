@@ -2,6 +2,7 @@
 export const prerender = true;
 
 import "../styles/globals.css";
+import barlowCondensed800 from "@fontsource/barlow-condensed/files/barlow-condensed-latin-800-normal.woff2?url";
 
 import Header from "../components/sections/Header.astro";
 import Hero from "../components/sections/Hero.astro";
@@ -26,8 +27,9 @@ import ContactFormModal from "../components/ui/ContactFormModal.astro";
 <html lang="cs">
 	<head>
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="preload" as="font" type="font/woff2" href={barlowCondensed800} crossorigin />
+		<link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Návrh webu zdarma — Daniel Marek</title>
