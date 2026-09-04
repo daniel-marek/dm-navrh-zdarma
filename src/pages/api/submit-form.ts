@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { createHash } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
 
 interface FormPayload {
@@ -134,6 +135,63 @@ async function logToSupabase(data: FormPayload): Promise<void> {
   }
 }
 
+const META_PIXEL_ID = import.meta.env.META_PIXEL_ID || "821997303593699";
+
+function sha256(value: string): string {
+  return createHash("sha256").update(value.trim().toLowerCase()).digest("hex");
+}
+
+function getCookie(cookieHeader: string | null, name: string): string | undefined {
+  if (!cookieHeader) return undefined;
+  const match = cookieHeader.match(new RegExp(`(?:^|; )${name}=([^;]+)`));
+  return match ? decodeURIComponent(match[1]) : undefined;
+}
+
+async function submitToMetaConversionsApi(
+  data: FormPayload,
+  request: Request,
+  eventId: string
+): Promise<void> {
+  const accessToken = import.meta.env.META_ACCESS_TOKEN;
+
+  const cookieHeader = request.headers.get("cookie");
+  const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+
+  const userData: Record<string, unknown> = {
+    em: [sha256(data.email)],
+    ph: [sha256(data.phone.replace(/\D/g, ""))],
+    fbp: getCookie(cookieHeader, "_fbp"),
+    fbc: getCookie(cookieHeader, "_fbc"),
+    client_ip_address: clientIp,
+    client_user_agent: request.headers.get("user-agent") ?? undefined,
+  };
+
+  const res = await fetch(
+    `https://graph.facebook.com/v25.0/${META_PIXEL_ID}/events?access_token=${accessToken}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        data: [
+          {
+            event_name: "Lead",
+            event_time: Math.floor(Date.now() / 1000),
+            event_id: eventId,
+            action_source: "website",
+            event_source_url: request.headers.get("referer") ?? undefined,
+            user_data: userData,
+          },
+        ],
+      }),
+    }
+  );
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`Meta Conversions API error ${res.status}: ${text}`);
+  }
+}
+
 export const POST: APIRoute = async ({ request }) => {
   let body: unknown;
   try {
@@ -153,10 +211,14 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const [ecomailResult, resendResult, supabaseResult] = await Promise.allSettled([
+  const rawEventId = (body as Record<string, unknown>).eventId;
+  const eventId = typeof rawEventId === "string" && rawEventId ? rawEventId : crypto.randomUUID();
+
+  const [ecomailResult, resendResult, supabaseResult, metaResult] = await Promise.allSettled([
     submitToEcomail(validation.data),
     sendNotificationEmail(validation.data),
     logToSupabase(validation.data),
+    submitToMetaConversionsApi(validation.data, request, eventId),
   ]);
 
   if (ecomailResult.status === "rejected") {
@@ -167,6 +229,9 @@ export const POST: APIRoute = async ({ request }) => {
   }
   if (supabaseResult.status === "rejected") {
     console.error("Supabase log failed:", supabaseResult.reason);
+  }
+  if (metaResult.status === "rejected") {
+    console.error("Meta Conversions API submission failed:", metaResult.reason);
   }
 
   if (ecomailResult.status === "fulfilled" || supabaseResult.status === "fulfilled") {

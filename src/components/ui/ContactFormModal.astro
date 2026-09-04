@@ -231,12 +231,14 @@
       submitBtn.disabled = true;
       submitBtn.textContent = "Odesílání…";
 
+      const eventId = crypto.randomUUID();
       const formData = new FormData(form);
       const payload = {
         name: String(formData.get("name") ?? "").trim(),
         email: String(formData.get("email") ?? "").trim(),
         phone: String(formData.get("phone") ?? "").trim(),
         note: String(formData.get("note") ?? "").trim(),
+        eventId,
       };
 
       try {
@@ -250,7 +252,7 @@
           form.hidden = true;
           successBox.hidden = false;
           const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
-          if (typeof fbq === "function") fbq("track", "Lead");
+          if (typeof fbq === "function") fbq("track", "Lead", {}, { eventID: eventId });
         } else {
           const data = await res.json().catch(() => null);
           showError(data?.error || "Odeslání se nezdařilo. Zkuste to prosím znovu.");
