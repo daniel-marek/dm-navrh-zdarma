@@ -3,12 +3,12 @@ import Eyebrow from "../ui/Eyebrow.astro";
 import DecoArrow from "../ui/DecoArrow.astro";
 
 const reviewImages = [
-  { src: "/photos/recenze-1.png", rotate: "-rotate-2" },
-  { src: "/photos/recenze-4.jpeg", rotate: "rotate-2" },
-  { src: "/photos/recenze-3.jpeg", rotate: "rotate-2" },
-  { src: "/photos/recenze-2.png", rotate: "-rotate-2" },
-  { src: "/photos/recenze-5.jpeg", rotate: "-rotate-2" },
-  { src: "/photos/recenze-6.jpeg", rotate: "rotate-2" },
+  { src: "/photos/recenze-1.png", rotate: "-rotate-2", order: "order-3 sm:order-none" },
+  { src: "/photos/recenze-4.jpeg", rotate: "rotate-2", order: "order-4 sm:order-none" },
+  { src: "/photos/recenze-3.jpeg", rotate: "rotate-2", order: "order-5 sm:order-none" },
+  { src: "/photos/recenze-2.png", rotate: "-rotate-2", order: "order-2 sm:order-none" },
+  { src: "/photos/recenze-5.jpeg", rotate: "-rotate-2", order: "order-6 sm:order-none" },
+  { src: "/photos/recenze-6.jpeg", rotate: "rotate-2", order: "order-1 sm:order-none" },
 ];
 ---
 
@@ -85,7 +85,7 @@ const reviewImages = [
           <img
             src={review.src}
             alt="Recenze na Google"
-            class:list={["block w-full rounded-lg shadow-[0_4px_16px_rgba(26,27,65,.12)]", review.rotate]}
+            class:list={["block w-full rounded-lg shadow-[0_4px_16px_rgba(26,27,65,.12)]", review.rotate, review.order]}
           />
         ))
       }

@@ -57,7 +57,7 @@ const items = [
         items.map((item) => (
           <div class:list={["gradient-card flex flex-col gap-3.5 rounded-brand-lg p-[clamp(22px,4vw,28px)]", item.rotate]}>
             <img src="/check-mark.webp" alt="" width="32" height="32" class="h-8 w-8" />
-            <span class="font-brand-heading text-xl font-extrabold uppercase text-heading">{item.title}</span>
+            <span class="font-brand-heading text-xl font-extrabold uppercase leading-tight text-heading">{item.title}</span>
             <span class="font-brand-sans text-sm font-bold italic text-blue-grey">{item.subtitle}</span>
             <span class="font-brand-sans text-sm font-semibold leading-normal text-ink">{item.text}</span>
           </div>
