@@ -1,0 +1,55 @@
+---
+interface Props {
+  src: string;
+  poster: string;
+  title: string;
+  class?: string;
+}
+
+const { src, poster, title, class: className } = Astro.props;
+---
+
+<div class:list={["relative overflow-hidden", className]}>
+  <div
+    class="group absolute inset-0 cursor-pointer"
+    data-video-facade
+    data-src={src}
+    role="button"
+    tabindex="0"
+    aria-label={`Přehrát video: ${title}`}
+  >
+    <img src={poster} alt={title} loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+    <span class="absolute inset-0 flex items-center justify-center bg-space-indigo/10 transition-colors group-hover:bg-space-indigo/20">
+      <span class="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 shadow-brand-sm transition-transform group-hover:scale-110">
+        <svg width="20" height="24" viewBox="0 0 20 24" fill="none" aria-hidden="true">
+          <path d="M1.5 1.5L18.5 12L1.5 22.5V1.5Z" fill="#1A1B41"></path>
+        </svg>
+      </span>
+    </span>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-video-facade]").forEach((facade) => {
+    function load() {
+      const src = facade.dataset.src;
+      if (!src) return;
+      const video = document.createElement("video");
+      video.src = src;
+      video.controls = true;
+      video.autoplay = true;
+      video.playsInline = true;
+      video.className = "absolute inset-0 h-full w-full object-cover";
+      facade.replaceWith(video);
+      video.play().catch(() => {});
+    }
+
+    facade.addEventListener("click", load);
+    facade.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        load();
+      }
+    });
+  });
+</script>

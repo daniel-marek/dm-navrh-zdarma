@@ -1,6 +1,9 @@
 ---
 import Eyebrow from "../ui/Eyebrow.astro";
 import DecoArrow from "../ui/DecoArrow.astro";
+import VideoFacade from "../ui/VideoFacade.astro";
+
+const testimonialVideoSrc = "https://pub-91ce00ffbac842a8bf8efe0080890c1b.r2.dev/vesi-recenze-web.mp4";
 
 const reviewImages = [
   { src: "/photos/recenze-1.png", rotate: "-rotate-2", order: "order-3 sm:order-none" },
@@ -76,7 +79,12 @@ const reviewImages = [
           <DecoArrow />
         </div>
       </div>
-      <div class="aspect-[9/16] w-full max-w-[300px] shrink-0 justify-self-center rounded-[20px] bg-white shadow-brand-sm"></div>
+      <VideoFacade
+        src={testimonialVideoSrc}
+        poster="/photos/vesi-recenze-poster.webp"
+        title="Reference od Veseckých"
+        class="aspect-[9/16] w-full max-w-[300px] shrink-0 justify-self-center rounded-[20px] bg-white shadow-brand-sm"
+      />
     </div>
 
     <div class="mt-10 grid grid-cols-1 items-start gap-7 sm:grid-cols-2">
