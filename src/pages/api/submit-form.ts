@@ -76,7 +76,7 @@ async function submitToEcomail(data: FormPayload): Promise<void> {
       update_existing: true,
       resubscribe: true,
       skip_confirmation: true,
-      trigger_autoresponders: false,
+      trigger_autoresponders: true,
     }),
   });
 
