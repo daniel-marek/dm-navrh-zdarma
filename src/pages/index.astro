@@ -22,6 +22,8 @@ import Footer from "../components/sections/Footer.astro";
 import CheckerStrip from "../components/ui/CheckerStrip.astro";
 import DecoArrow from "../components/ui/DecoArrow.astro";
 import ContactFormModal from "../components/ui/ContactFormModal.astro";
+
+const gaId = import.meta.env.PUBLIC_GA_ID;
 ---
 
 <html lang="cs">
@@ -38,6 +40,21 @@ import ContactFormModal from "../components/ui/ContactFormModal.astro";
 			content="Nechte si zdarma a bez závazků navrhnout web pro vaši firmu. Zaplatíte, jen když budete s výsledkem spokojení."
 		/>
 		<meta name="robots" content="noindex" />
+		{
+			gaId && (
+				<>
+					<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`} />
+					<script is:inline define:vars={{ gaId }}>
+						window.dataLayer = window.dataLayer || [];
+						function gtag() {
+							dataLayer.push(arguments);
+						}
+						gtag("js", new Date());
+						gtag("config", gaId);
+					</script>
+				</>
+			)
+		}
 		<script>
 			// @ts-nocheck — unmodified Meta Pixel base code snippet
 			!(function (f, b, e, v, n, t, s) {
