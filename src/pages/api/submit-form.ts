@@ -86,17 +86,23 @@ async function submitToEcomail(data: FormPayload): Promise<void> {
   }
 }
 
-async function sendNotificationEmail(data: FormPayload): Promise<void> {
-  const apiKey = import.meta.env.RESEND_API_KEY;
-  const from = import.meta.env.RESEND_FROM_EMAIL;
-  const to = import.meta.env.NOTIFICATION_EMAIL;
-
-  const lines = [
+function formatLeadLines(data: FormPayload): string[] {
+  return [
     `Jméno: ${data.name}`,
     `Email: ${data.email}`,
     `Telefon: ${data.phone}`,
     data.note ? `Poznámka: ${data.note}` : null,
-  ].filter(Boolean);
+  ].filter((l): l is string => Boolean(l));
+}
+
+async function sendNotificationEmail(data: FormPayload): Promise<void> {
+  await sendResendEmail(`Nová poptávka z webu — ${data.name}`, formatLeadLines(data).join("\n"));
+}
+
+async function sendResendEmail(subject: string, text: string): Promise<void> {
+  const apiKey = import.meta.env.RESEND_API_KEY;
+  const from = import.meta.env.RESEND_FROM_EMAIL;
+  const to = import.meta.env.NOTIFICATION_EMAIL;
 
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -107,8 +113,8 @@ async function sendNotificationEmail(data: FormPayload): Promise<void> {
     body: JSON.stringify({
       from,
       to: [to],
-      subject: `Nová poptávka z webu — ${data.name}`,
-      text: lines.join("\n"),
+      subject,
+      text,
     }),
   });
 
@@ -118,11 +124,12 @@ async function sendNotificationEmail(data: FormPayload): Promise<void> {
   }
 }
 
-async function logToSupabase(data: FormPayload): Promise<void> {
-  const supabaseUrl = import.meta.env.SUPABASE_URL;
-  const serviceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+function getSupabase() {
+  return createClient(import.meta.env.SUPABASE_URL, import.meta.env.SUPABASE_SERVICE_ROLE_KEY);
+}
 
-  const supabase = createClient(supabaseUrl, serviceRoleKey);
+async function logToSupabase(data: FormPayload): Promise<void> {
+  const supabase = getSupabase();
   const { error } = await supabase.from("form_submissions").insert({
     name: data.name,
     email: data.email,
@@ -132,6 +139,74 @@ async function logToSupabase(data: FormPayload): Promise<void> {
 
   if (error) {
     throw new Error(`Supabase error: ${error.message}`);
+  }
+}
+
+type ServiceName = "ecomail" | "resend" | "supabase" | "meta";
+
+// Zapíše výsledek odeslání do tabulky form_logs. Nikdy nevyhodí chybu — logování nesmí
+// rozbít odpověď návštěvníkovi.
+async function logSubmissionResult(
+  data: FormPayload,
+  results: Record<ServiceName, PromiseSettledResult<void>>,
+  success: boolean
+): Promise<void> {
+  try {
+    const services = Object.keys(results) as ServiceName[];
+    const failed = services.filter((s) => results[s].status === "rejected");
+    const errors: Record<string, string> = {};
+    for (const s of failed) {
+      const r = results[s] as PromiseRejectedResult;
+      errors[s] = String(r.reason instanceof Error ? r.reason.message : r.reason).slice(0, 1000);
+    }
+
+    const { error } = await getSupabase()
+      .from("form_logs")
+      .insert({
+        status: !success ? "failed" : failed.length ? "partial" : "success",
+        email: data.email,
+        ecomail_ok: results.ecomail.status === "fulfilled",
+        resend_ok: results.resend.status === "fulfilled",
+        supabase_ok: results.supabase.status === "fulfilled",
+        meta_ok: results.meta.status === "fulfilled",
+        errors: failed.length ? errors : null,
+      });
+    if (error) console.error("Form log write failed:", error.message);
+  } catch (err) {
+    console.error("Form log write failed:", err);
+  }
+}
+
+// Když selže kterákoli služba, pošle upozornění i s údaji návštěvníka, aby poptávka
+// nezanikla. Nikdy nevyhodí chybu.
+async function sendFailureAlert(
+  data: FormPayload,
+  results: Record<ServiceName, PromiseSettledResult<void>>,
+  success: boolean
+): Promise<void> {
+  try {
+    const errorLines = (Object.keys(results) as ServiceName[]).map((s) => {
+      const r = results[s];
+      return r.status === "rejected"
+        ? `${s}: ${String(r.reason instanceof Error ? r.reason.message : r.reason).slice(0, 500)}`
+        : `${s}: OK`;
+    });
+    await sendResendEmail(
+      success ? "⚠️ Formulář odeslán jen částečně" : "⚠️ Selhalo odeslání formuláře",
+      [
+        success
+          ? "Formulář se uložil, ale některá služba selhala (viz stav níže)."
+          : "Formulář se nepodařilo uložit do Ecomailu ani do Supabase.",
+        "",
+        "Údaje návštěvníka:",
+        ...formatLeadLines(data),
+        "",
+        "Stav služeb:",
+        ...errorLines,
+      ].join("\n")
+    );
+  } catch (err) {
+    console.error("Failure alert email failed:", err);
   }
 }
 
@@ -234,7 +309,22 @@ export const POST: APIRoute = async ({ request }) => {
     console.error("Meta Conversions API submission failed:", metaResult.reason);
   }
 
-  if (ecomailResult.status === "fulfilled" || supabaseResult.status === "fulfilled") {
+  const success = ecomailResult.status === "fulfilled" || supabaseResult.status === "fulfilled";
+
+  const results = {
+    ecomail: ecomailResult,
+    resend: resendResult,
+    supabase: supabaseResult,
+    meta: metaResult,
+  };
+  await Promise.all([
+    logSubmissionResult(validation.data, results, success),
+    Object.values(results).some((r) => r.status === "rejected")
+      ? sendFailureAlert(validation.data, results, success)
+      : Promise.resolve(),
+  ]);
+
+  if (success) {
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
